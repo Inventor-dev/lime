@@ -1,0 +1,3 @@
+org.springframework.boot.autoconfigure.EnableAutoConfiguration=\
+  xyz.lemone.lime.core.config.MyBatisPlusAutoConfiguration,\
+  xyz.lemone.lime.core.config.DruidAutoConfiguartion

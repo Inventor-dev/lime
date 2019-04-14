@@ -12,6 +12,17 @@ public class BaseResult<E> extends JsonResult<E> {
         success = true;
     }
 
+    public BaseResult() {
+    }
+
+    public BaseResult(E data) {
+        super(data);
+    }
+
+    public BaseResult(boolean success, String message, E data) {
+        super(success, message, data);
+    }
+
     public E getData() {
         return data;
     }
@@ -19,5 +30,9 @@ public class BaseResult<E> extends JsonResult<E> {
     public void setData(E data) {
         this.data = data;
     }
+
+
+
+
 
 }

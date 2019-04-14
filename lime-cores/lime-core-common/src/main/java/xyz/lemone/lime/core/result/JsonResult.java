@@ -28,6 +28,16 @@ public class JsonResult<E> implements Serializable {
         super();
     }
 
+    public JsonResult(E data) {
+        this.data = data;
+    }
+
+    public JsonResult(boolean success, String message, E data) {
+        this.success = success;
+        this.message = message;
+        this.data = data;
+    }
+
     public boolean isSuccess() {
         return success;
     }
@@ -43,5 +53,7 @@ public class JsonResult<E> implements Serializable {
     public void setMessage(String message) {
         this.message = message;
     }
+
+
 
 }

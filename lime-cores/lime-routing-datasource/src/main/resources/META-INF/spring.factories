@@ -1,2 +1,6 @@
+# Auto Configure
 org.springframework.boot.autoconfigure.EnableAutoConfiguration=\
   xyz.lemone.lime.datasource.config.DataSourceConfiguration
+
+
+

@@ -12,7 +12,7 @@
 	<groupId>xyz.lemone.lime</groupId>
 	<artifactId>lime-dependencies</artifactId>
 	<packaging>pom</packaging>
-	<name>lime Dependencies</name>
+	<name>lime dependencies</name>
 	<description>lime Dependencies</description>
 
 	<licenses>
@@ -39,14 +39,17 @@
 		<lombok.version>1.18.2</lombok.version>
 		<druid.version>1.1.10</druid.version>
 		<mybatis.plus.version>3.1.0</mybatis.plus.version>
+		<spring.boot.version>2.1.4.RELEASE</spring.boot.version>
 		<spring.cloud.version>Greenwich.RELEASE</spring.cloud.version>
-		<spring.cloud.alibaba.version>0.2.1.RELEASE</spring.cloud.alibaba.version>
+		<spring.cloud.alibaba.version>0.9.0.RELEASE</spring.cloud.alibaba.version>
+
 	</properties>
 
 
 	<dependencyManagement>
 		<dependencies>
-			<!-- common 包 -->
+
+			<!-- common dependencies -->
 
 			<dependency>
 				<groupId>org.apache.commons</groupId>
@@ -60,7 +63,7 @@
 				<version>${common.io.version}</version>
 			</dependency>
 
-			<!-- 工具类插件 -->
+			<!-- util dependencies -->
 
 			<dependency>
 				<groupId>org.projectlombok</groupId>
@@ -86,7 +89,7 @@
 			<dependency>
 				<groupId>org.springframework.boot</groupId>
 				<artifactId>spring-boot-dependencies</artifactId>
-				<version>2.1.4.RELEASE</version>
+				<version>${spring.boot.version}</version>
 				<type>pom</type>
 				<scope>import</scope>
 			</dependency>
@@ -108,23 +111,36 @@
 			</dependency>
 
 		</dependencies>
+
 	</dependencyManagement>
 
-	<build>
+	<repositories>
 
-		<pluginManagement>
+		<repository>
+			<id>aliyun</id>
+			<name>aliyun</name>
+			<url>https://maven.aliyun.com/repository/public</url>
+			<layout>default</layout>
+		</repository>
 
-			<plugins>
 
-				<plugin>
-					<groupId>org.springframework.boot</groupId>
-					<artifactId>spring-boot-maven-plugin</artifactId>
-				</plugin>
+		<repository>
+			<id>spring-milestones</id>
+			<name>Spring Milestones</name>
+			<url>http://repo.spring.io/milestone</url>
+		</repository>
 
-			</plugins>
 
-		</pluginManagement>
+	</repositories>
 
-	</build>
+	<pluginRepositories>
+
+		<pluginRepository>
+			<id>spring-plugin</id>
+			<name>spring-plugin</name>
+			<url>https://maven.aliyun.com/repository/spring-plugin</url>
+		</pluginRepository>
+
+	</pluginRepositories>
 
 </project>

@@ -9,9 +9,10 @@ spring:
       discovery:
         server-addr: 127.0.0.1:8848
     gateway:
+      default-filters:
       routes:
-        - id: lime-sys-web
-          uri: lb://lime-sys-web
-          predicates:
-            - path=//api/**
+      - id: lime-sys-web
+        uri: lb://lime-sys-web
+        predicates:
+        - Path=/api/**
 

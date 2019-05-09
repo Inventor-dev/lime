@@ -5,19 +5,22 @@ package xyz.lemone.lime.datasource.jdbc;
  */
 public class DatasourceContextHolder {
 
-    private static final ThreadLocal<DatasourceTypeEnum> contextHolder = new ThreadLocal();
+    private static final ThreadLocal<DatasourceTypeEnum> CONTEXT_HOLDER = new ThreadLocal();
 
     public static void setDatasourceType(DatasourceTypeEnum dbType) {
-        if (dbType == null) throw new NullPointerException();
-        contextHolder.set(dbType);
+        if (dbType == null) {
+			throw new NullPointerException();
+		}
+		CONTEXT_HOLDER.set(dbType);
     }
 
     public static DatasourceTypeEnum getDatasourceType() {
-        return contextHolder.get() == null ? DatasourceTypeEnum.PRODUCT_MASTER : contextHolder.get();
+		DatasourceTypeEnum datasourceType = CONTEXT_HOLDER.get();
+		return datasourceType == null ? DatasourceTypeEnum.MASTER : datasourceType;
     }
 
     public static void clearDatasourceType() {
-        contextHolder.remove();
+		CONTEXT_HOLDER.remove();
     }
 
 

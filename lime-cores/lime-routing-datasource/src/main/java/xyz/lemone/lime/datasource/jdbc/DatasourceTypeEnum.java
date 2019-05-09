@@ -6,20 +6,12 @@ package xyz.lemone.lime.datasource.jdbc;
 public enum DatasourceTypeEnum {
 
     /**
-     * 主 写
+     * 写
      */
-    PRODUCT_MASTER,
+    MASTER,
     /**
-     * 主 读
+     * 读
      */
-    PRODUCT_SLAVE,
-    /**
-     * 副 写
-     */
-    STUDY_MASTER,
-    /**
-     * 副 读
-     */
-    STUDY_SLAVE;
+    SLAVE;
 
 }

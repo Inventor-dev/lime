@@ -19,8 +19,9 @@
         <module>lime-dependencies</module>
         <module>lime-parent</module>
         <module>lime-cores</module>
-		<module>lime-gateway</module>
+        <module>lime-oauth</module>
+        <module>lime-gateway</module>
         <module>lime-sys</module>
-	</modules>
+    </modules>
     
 </project>

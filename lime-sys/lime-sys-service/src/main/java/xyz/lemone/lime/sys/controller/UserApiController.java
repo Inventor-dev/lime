@@ -1,9 +1,5 @@
 package xyz.lemone.lime.sys.controller;
 
-
-import org.springframework.security.core.userdetails.User;
-import org.springframework.security.core.userdetails.UserDetails;
-import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -24,10 +20,12 @@ public class UserApiController implements UserRpcService {
         return dto;
     }
 
-	@Override
-	@GetMapping("/username_{username}")
-	public UserDetails loadUserByUsername(@PathVariable("username") String username) throws UsernameNotFoundException {
-		User user = new User("admin","admin",null);
-		return user;
-	}
+    @Override
+    @GetMapping("/username_{username}")
+    public UserDto loadUserByUsername(@PathVariable("username") String username) {
+        UserDto user = new UserDto();
+        user.setName("admin");
+        user.setId(001L);
+        return user;
+    }
 }

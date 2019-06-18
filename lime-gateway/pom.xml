@@ -10,7 +10,10 @@
 	</parent>
 	<modelVersion>4.0.0</modelVersion>
 
+    <groupId>xyz.lemone.lime</groupId>
 	<artifactId>lime-gateway</artifactId>
+    <version>0.0.1-SNAPSHOT</version>
+    <packaging>jar</packaging>
 	<description>
 		网关
 	</description>
@@ -21,7 +24,6 @@
 		<dependency>
 			<groupId>xyz.lemone.lime</groupId>
 			<artifactId>lime-core-common</artifactId>
-			<version>${revision}</version>
 		</dependency>
 
 		<dependency>
@@ -38,7 +40,6 @@
 			<groupId>org.springframework.cloud</groupId>
 			<artifactId>spring-cloud-starter-alibaba-nacos-discovery</artifactId>
 		</dependency>
-
 
 	</dependencies>
 

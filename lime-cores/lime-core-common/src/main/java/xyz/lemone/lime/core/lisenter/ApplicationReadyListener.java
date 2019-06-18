@@ -12,10 +12,12 @@ import org.springframework.stereotype.Component;
  */
 public class ApplicationReadyListener implements ApplicationListener<ApplicationReadyEvent> {
 
-    @Value("${spring.application.name:}")
-    private String service;
-
-    @Override
+    @Value("${spring.application.name: }")
+    private String serviceName;
+    
+    @Value("${spring.application.version: }")
+    private String serviceVersion;
+    
     public void onApplicationEvent(ApplicationReadyEvent applicationReadyEvent) {
         System.out.println("\r");
         System.out.println("    ╭────╮         ╭───╮   ╭──── ────╮      ╭───╮       ╭──────╮     ");
@@ -26,7 +28,7 @@ public class ApplicationReadyListener implements ApplicationListener<Application
         System.out.println("    ╭╯  ╰────╮  │      │   │    │    │     ╲     ╱      │   │   │    ");
         System.out.println("    ╰────────╯  ╰──────╯   ╰────╯────╯      ╰───╯       ╰───┴───╯    ");
         System.out.println("\r");
-        System.out.println("    @Inventor-dev :: MicroService -> " + service +"");
+        System.out.println("    @Inventor-dev :: MicroService -> " + serviceName + " (v" + serviceVersion +")" );
         System.out.println("\r");
     }
 }

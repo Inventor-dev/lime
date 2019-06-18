@@ -3,47 +3,131 @@
          xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
-    <parent>
-        <groupId>xyz.lemone.lime</groupId>
-        <artifactId>lime-dependencies</artifactId>
-        <version>${revision}</version>
-        <relativePath>../lime-dependencies</relativePath>
-    </parent>
+
     <groupId>xyz.lemone.lime</groupId>
     <artifactId>lime-parent</artifactId>
-    <name>${project.artifactId}</name>
+    <version>${revision}</version>
     <packaging>pom</packaging>
 
     <properties>
+        <revision>0.0.1-SNAPSHOT</revision>
+        <lime.core.version>0.0.1-SNAPSHOT</lime.core.version>
+        <lime.dependencies.version>0.0.1-SNAPSHOT</lime.dependencies.version>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <maven.compiler.source>1.8</maven.compiler.source>
         <maven.compiler.target>1.8</maven.compiler.target>
     </properties>
 
+    <dependencyManagement>
+
+        <dependencies>
+
+            <dependency>
+                <groupId>xyz.lemone.lime</groupId>
+                <artifactId>lime-core-common</artifactId>
+                <version>${lime.core.version}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>xyz.lemone.lime</groupId>
+                <artifactId>lime-core-data</artifactId>
+                <version>${lime.core.version}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>xyz.lemone.lime</groupId>
+                <artifactId>lime-dependencies</artifactId>
+                <version>${lime.dependencies.version}</version>
+                <type>pom</type>
+                <scope>import</scope>
+            </dependency>
+
+        </dependencies>
+
+    </dependencyManagement>
+
+    <!--环境打包配置-->
+    <profiles>
+
+        <!--开发环境 默认-->
+        <profile>
+            <id>dev</id>
+            <properties>
+                <profile.active>dev</profile.active>
+            </properties>
+            <activation>
+                <activeByDefault>true</activeByDefault>
+            </activation>
+        </profile>
+
+        <!--本地开发环境-->
+        <profile>
+            <id>dev-local</id>
+            <properties>
+                <profile.active>dev-local</profile.active>
+            </properties>
+        </profile>
+
+        <!--生产环境-->
+        <profile>
+            <id>prod</id>
+            <properties>
+                <profile.active>prod</profile.active>
+            </properties>
+        </profile>
+
+        <!-- 测试环境 -->
+        <profile>
+            <id>test</id>
+            <properties>
+                <profile.active>test</profile.active>
+            </properties>
+        </profile>
+
+    </profiles>
 
 
-	<build>
+    <build>
 
-		<pluginManagement>
+        <!-- 配置文件处理 -->
+        <resources>
 
-			<plugins>
+            <!--要排除的文件-->
+            <resource>
+                <directory>${basedir}/src/main/resources</directory>
+                <excludes>
+                    <exclude>application*.yml</exclude>
+                </excludes>
+            </resource>
 
-				<plugin>
-					<groupId>org.springframework.boot</groupId>
-					<artifactId>spring-boot-maven-plugin</artifactId>
-				</plugin>
+            <!--要引入的文件-->
+            <resource>
+                <filtering>true</filtering>
+                <directory>${basedir}/src/main/resources</directory>
+                <includes>
+                    <include>application.yml</include>
+                    <include>application-${profile.active}.yml</include>
+                </includes>
+            </resource>
+        </resources>
 
-			</plugins>
+        <!--插件配置-->
+        <pluginManagement>
 
-		</pluginManagement>
+            <plugins>
 
-	</build>
+                <plugin>
+                    <groupId>org.springframework.boot</groupId>
+                    <artifactId>spring-boot-maven-plugin</artifactId>
+                </plugin>
 
 
 
+            </plugins>
 
+        </pluginManagement>
 
-
+    </build>
 
 
 </project>

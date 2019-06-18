@@ -1,10 +1,8 @@
 package xyz.lemone.lime.api.sys.dto;
 
-import lombok.Data;
 
 import java.io.Serializable;
 
-@Data
 public class UserDto implements Serializable {
 
     private static final long serialVersionUID = -1L;
@@ -15,5 +13,21 @@ public class UserDto implements Serializable {
 
 
     public UserDto() {
+    }
+    
+    public Long getId() {
+        return id;
+    }
+    
+    public void setId(Long id) {
+        this.id = id;
+    }
+    
+    public String getName() {
+        return name;
+    }
+    
+    public void setName(String name) {
+        this.name = name;
     }
 }

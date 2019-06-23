@@ -52,7 +52,8 @@ public class OAuth2ServerConfig {
                     // session creation to be allowed (it's disabled by default in 2.0.6)
                     .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.IF_REQUIRED)
                     .and()
-                    .requestMatchers().antMatchers("/photos/**", "/oauth/users/**", "/oauth/clients/**", "/me")
+                    .requestMatchers().antMatchers("/photos/**", "/oauth/users/**", "/oauth/clients/**","/me"
+                                                    ,"/css/**" ,"/scripts/**","/fonts/**","/images/**","/webjars/**")
                     .and()
                     .authorizeRequests()
                     .antMatchers("/me").access("#oauth2.hasScope('read')")

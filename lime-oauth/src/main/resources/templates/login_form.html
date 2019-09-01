@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" >
+<head>
+  <meta charset="utf-8">
+  <title>login-lime</title>
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <!-- Loading Bootstrap -->
+  <link th:href="@{/css/vendor/bootstrap.min.css}" href="../static/css/vendor/bootstrap.min.css" rel="stylesheet">
+  <!-- Loading Flat UI  -->
+  <link th:href="@{/css/flat-ui.css}" href="../static/css/flat-ui.css" rel="stylesheet">
+  <link rel="shortcut icon" th:href="@{/images/favicon.png}" href="../static/images/favicon.svg">
+  <!-- HTML5 shim, for IE6-8 support of HTML5 elements -->
+  <!--[if lt IE 9]>
+  <script src="http://cdn.bootcss.com/html5shiv/3.6.2/html5shiv.js"></script>
+  <![endif]-->
+  <style type="text/css">
+  </style>
+</head>
+<body>
+<form class="login-form" target="_parent" method="post" th:action="@{/login}">
+  <div class="form-group">
+    <input type="text" class="form-control login-field" name="username" value="marissa" placeholder="Enter your name" id="login-name" />
+    <label class="login-field-icon fui-user" for="login-name"></label>
+  </div>
+  <div class="form-group">
+    <input type="password" class="form-control login-field" name="password" value="koala" placeholder="Password" id="login-pass" />
+    <label class="login-field-icon fui-lock" for="login-pass"></label>
+  </div>
+  <button class="btn btn-primary btn-lg btn-block" type="submit">Log in</button>
+  <a class="login-link" href="#">Lost your password?</a>
+</form>
+<!-- jQuery  -->
+<script th:src="@{/webjars/jquery/3.3.1-2/jquery.min.js}" src="https://cdn.bootcss.com/jquery/3.3.1/jquery.min.js"></script>
+<script th:src="@{/scripts/flat-ui.js}" src="../static/scripts/flat-ui.js"></script>
+</body>
+</html>

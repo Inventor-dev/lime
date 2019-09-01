@@ -9,21 +9,42 @@ import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.builders.WebSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
+import org.springframework.security.core.userdetails.User;
+import org.springframework.security.core.userdetails.UserDetailsService;
+import org.springframework.security.crypto.factory.PasswordEncoderFactories;
+import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.security.provisioning.InMemoryUserDetailsManager;
 import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 
 @Configuration
 @EnableWebSecurity
 public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
     
-    @Autowired
-    public void globalUserDetails(AuthenticationManagerBuilder auth) throws Exception {
-        auth.inMemoryAuthentication().withUser("marissa").password("koala").roles("USER").and().withUser("paul")
-                .password("emu").roles("USER");
+    
+    @Bean
+    PasswordEncoder passwordEncoder() {
+        return PasswordEncoderFactories.createDelegatingPasswordEncoder();
+    }
+    
+    @Bean
+    @Override
+    public UserDetailsService userDetailsService() {
+        PasswordEncoder passwordEncoder = passwordEncoder();
+        return new InMemoryUserDetailsManager(
+                User.withUsername("marissa").password(passwordEncoder.encode("koala")).roles("USER").build()
+                ,User.withUsername("paul").password(passwordEncoder.encode("emu")).roles("USER").build()
+        );
     }
     
     @Override
     public void configure(WebSecurity web) throws Exception {
-        web.ignoring().antMatchers("/webjars/**", "/images/**", "/oauth/uncache_approvals", "/oauth/cache_approvals");
+//        忽略资源路径
+//        @formatter:off
+        web.ignoring().antMatchers(
+                "/webjars/**", "/images/**","/css/**" ,"/scripts/**","/fonts/**",
+                "/oauth/uncache_approvals", "/oauth/cache_approvals",
+                "/login_form.html");
+//        @formatter:on
     }
     
     @Bean

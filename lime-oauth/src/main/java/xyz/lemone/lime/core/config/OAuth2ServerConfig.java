@@ -8,6 +8,8 @@ import org.springframework.http.HttpMethod;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.http.SessionCreationPolicy;
+import org.springframework.security.crypto.factory.PasswordEncoderFactories;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.oauth2.config.annotation.configurers.ClientDetailsServiceConfigurer;
 import org.springframework.security.oauth2.config.annotation.web.configuration.AuthorizationServerConfigurerAdapter;
 import org.springframework.security.oauth2.config.annotation.web.configuration.EnableAuthorizationServer;
@@ -16,7 +18,9 @@ import org.springframework.security.oauth2.config.annotation.web.configuration.R
 import org.springframework.security.oauth2.config.annotation.web.configurers.AuthorizationServerEndpointsConfigurer;
 import org.springframework.security.oauth2.config.annotation.web.configurers.AuthorizationServerSecurityConfigurer;
 import org.springframework.security.oauth2.config.annotation.web.configurers.ResourceServerSecurityConfigurer;
+import org.springframework.security.oauth2.provider.ClientDetails;
 import org.springframework.security.oauth2.provider.ClientDetailsService;
+import org.springframework.security.oauth2.provider.ClientRegistrationException;
 import org.springframework.security.oauth2.provider.approval.ApprovalStore;
 import org.springframework.security.oauth2.provider.approval.TokenApprovalStore;
 import org.springframework.security.oauth2.provider.approval.UserApprovalHandler;
@@ -52,11 +56,10 @@ public class OAuth2ServerConfig {
                     // session creation to be allowed (it's disabled by default in 2.0.6)
                     .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.IF_REQUIRED)
                     .and()
-                    .requestMatchers().antMatchers("/photos/**", "/oauth/users/**", "/oauth/clients/**","/me"
-                                                    ,"/css/**" ,"/scripts/**","/fonts/**","/images/**","/webjars/**")
+                    .requestMatchers().antMatchers("/photos/**", "/oauth/users/**", "/oauth/clients/**","/me")
                     .and()
                     .authorizeRequests()
-                    .antMatchers("/me").access("#oauth2.hasScope('read')")
+                    .antMatchers("/me").authenticated()
                     .antMatchers("/photos").access("#oauth2.hasScope('read') or (!#oauth2.isOAuth() and hasRole('ROLE_USER'))")
                     .antMatchers("/photos/trusted/**").access("#oauth2.hasScope('trust')")
                     .antMatchers("/photos/user/**").access("#oauth2.hasScope('trust')")
@@ -70,7 +73,12 @@ public class OAuth2ServerConfig {
             // @formatter:on
         }
         
+        
+        
     }
+    
+    
+    
     
     @Configuration
     @EnableAuthorizationServer
@@ -91,7 +99,6 @@ public class OAuth2ServerConfig {
         
         @Override
         public void configure(ClientDetailsServiceConfigurer clients) throws Exception {
-            
             // @formatter:off
             clients.inMemory().withClient("tonr")
                     .resourceIds(SPARKLR_RESOURCE_ID) 
@@ -140,6 +147,8 @@ public class OAuth2ServerConfig {
                     .autoApprove(true);
             // @formatter:on
         }
+        
+        
         
         @Bean
         public TokenStore tokenStore() {

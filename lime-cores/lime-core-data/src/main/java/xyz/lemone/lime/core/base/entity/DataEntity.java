@@ -18,7 +18,7 @@ import java.time.LocalDateTime;
  * @param <I> 主键
  */
 @Data
-public class DataEntity<E extends DataEntity,I extends Serializable> extends Model<E> {
+public class DataEntity<E extends DataEntity,I extends Serializable> extends Model {
 
     private static final long serialVersionUID = 1L;
     /**

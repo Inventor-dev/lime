@@ -33,6 +33,13 @@
       .login .login-icon{
         top: 200px;
       }
+      .login iframe{
+        border: 0px;
+        width: 360px;
+        height: 250px;
+        position: relative;
+        border-radius: 6px;
+      }
       #bg-img{
         width: 100%;
         height: 100%;
@@ -51,21 +58,7 @@
             <img th:src="@{/images/logo.svg}" src="../static/images/logo.svg" alt="Welcome to lime oauth" />
             <h4>Welcome to <small>lime oauth</small></h4>
           </div>
-
-          <div class="login-form">
-            <div class="form-group">
-              <input type="text" class="form-control login-field" value="" placeholder="Enter your name" id="login-name" />
-              <label class="login-field-icon fui-user" for="login-name"></label>
-            </div>
-
-            <div class="form-group">
-              <input type="password" class="form-control login-field" value="" placeholder="Password" id="login-pass" />
-              <label class="login-field-icon fui-lock" for="login-pass"></label>
-            </div>
-
-            <a class="btn btn-primary btn-lg btn-block" href="#">Log in</a>
-            <a class="login-link" href="#">Lost your password?</a>
-          </div>
+          <iframe th:src="@{/login_form.html}" src="../login_form.html"></iframe>
         </div>
       </div>
     </div>

@@ -101,6 +101,30 @@
                     </configuration>
                 </plugin>
 
+
+                <!-- Spring boot maven 打包插件 -->
+                <plugin>
+                    <groupId>org.springframework.boot</groupId>
+                    <artifactId>spring-boot-maven-plugin</artifactId>
+                    <version>2.1.7.RELEASE</version>
+                    <configuration>
+                        <finalName>${project.artifactId}</finalName>
+                        <fork>true</fork>
+                        <excludeDevtools>false</excludeDevtools>
+                        <jvmArguments>
+                            -Xdebug -Xrunjdwp:transport=dt_socket,server=y,suspend=y
+                        </jvmArguments>
+                    </configuration>
+                    <executions>
+                        <execution>
+                            <goals>
+                                <goal>repackage</goal>
+                            </goals>
+                        </execution>
+                    </executions>
+                </plugin>
+
+
             </plugins>
 
         </pluginManagement>

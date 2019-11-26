@@ -82,4 +82,81 @@
 
     </dependencies>
 
+
+    <!-- 多环境打包配置 -->
+    <profiles>
+
+        <!-- dev  开发环境  -->
+        <profile>
+            <id>dev</id>
+            <properties>
+                <profile.active>dev</profile.active>
+            </properties>
+            <activation>
+                <activeByDefault>true</activeByDefault>
+            </activation>
+        </profile>
+
+        <!-- 本地开发环境  -->
+        <profile>
+            <id>dev-local</id>
+            <properties>
+                <profile.active>dev-local</profile.active>
+            </properties>
+        </profile>
+
+        <!-- docker 环境 -->
+        <profile>
+            <id>docker</id>
+            <properties>
+                <profile.active>docker</profile.active>
+            </properties>
+        </profile>
+
+    </profiles>
+
+
+    <build>
+
+        <!-- 配置文件处理 -->
+        <resources>
+
+            <!--要排除的文件-->
+            <resource>
+                <directory>${basedir}/src/main/resources</directory>
+                <excludes>
+                    <exclude>bootstrap.yml</exclude>
+                    <exclude>application*.yml</exclude>
+                </excludes>
+            </resource>
+
+            <!--要引入的文件-->
+            <resource>
+                <filtering>true</filtering>
+                <directory>${basedir}/src/main/resources</directory>
+                <includes>
+                    <include>bootstrap.yml</include>
+                    <include>application-${profile.active}.yml</include>
+                </includes>
+            </resource>
+
+        </resources>
+
+        <plugins>
+            <!-- maven  编译插件 -->
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-compiler-plugin</artifactId>
+            </plugin>
+
+            <!-- spring boot 插件 -->
+            <plugin>
+                <groupId>org.springframework.boot</groupId>
+                <artifactId>spring-boot-maven-plugin</artifactId>
+            </plugin>
+
+        </plugins>
+
+    </build>
+
 </project>

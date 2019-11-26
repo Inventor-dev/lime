@@ -3,17 +3,18 @@
          xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
-    <groupId>xyz.lemone.lime</groupId>
-    <artifactId>lime</artifactId>
+
+    <groupId>xyz.lemone.lime.core</groupId>
+    <artifactId>lime-core</artifactId>
     <version>0.0.1-SNAPSHOT</version>
     <packaging>pom</packaging>
-    <name>lime</name>
 
     <modules>
-        <module>dependencies</module>
-        <module>core</module>
-        <module>oauth</module>
-        <module>sys</module>
+        <module>parent</module>
+        <module>common</module>
+        <module>data</module>
+        <module>routing-datasource</module>
     </modules>
+
 
 </project>

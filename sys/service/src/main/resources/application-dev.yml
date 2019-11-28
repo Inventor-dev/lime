@@ -1,0 +1,15 @@
+spring:
+  cloud:
+    nacos:
+      discovery:
+        namespace: dev
+        server-addr: localhost:8848
+  datasource:
+    druid:
+      url: jdbc:mysql://localhost:3306/lime
+      username: root
+      password: buzhidao
+      stat-view-servlet:
+        enabled: false
+      web-stat-filter:
+        enabled: false

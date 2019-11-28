@@ -1,0 +1,9 @@
+spring:
+  thymeleaf:
+    cache: false
+
+security:
+  oauth2:
+    client:
+      client-id: first-client
+      client-secret: noonewilleverguess

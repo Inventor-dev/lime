@@ -1,8 +1,11 @@
 server:
-  port: 8060
+  port: 8433
 spring:
   application:
     name: @artifactId@
     version: @version@
   profiles:
     active: @profile.active@
+  output:
+    ansi:
+      enabled: detect

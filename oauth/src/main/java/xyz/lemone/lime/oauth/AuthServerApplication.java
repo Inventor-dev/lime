@@ -9,10 +9,10 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
  * @author lemon
  */
 @SpringBootApplication(scanBasePackages = "xyz.lemone.lime")
-public class OauthApplication {
+public class AuthServerApplication {
     
     public static void main(String[] args) {
-        SpringApplication.run(OauthApplication.class, args);
+        SpringApplication.run(AuthServerApplication.class, args);
     }
     
 }

@@ -1,0 +1,179 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <parent>
+        <artifactId>oauth-parent</artifactId>
+        <groupId>xyz.lemone.lime.oauth</groupId>
+        <version>0.0.1-SNAPSHOT</version>
+        <relativePath>../parent/pom.xml</relativePath>
+    </parent>
+    <modelVersion>4.0.0</modelVersion>
+
+    <groupId>xyz.lemone.lime.oauth</groupId>
+    <artifactId>oauth-server</artifactId>
+
+
+    <properties>
+        <lime.dependencies.version>0.0.1-SNAPSHOT</lime.dependencies.version>
+        <webjar.jauery.version>3.3.1-2</webjar.jauery.version>
+
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+        <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
+        <java.version>8</java.version>
+    </properties>
+
+
+
+    <dependencies>
+
+        <dependency>
+            <groupId>xyz.lemone.lime.core</groupId>
+            <artifactId>core-common</artifactId>
+            <version>0.0.1-SNAPSHOT</version>
+        </dependency>
+
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-web</artifactId>
+        </dependency>
+
+        <dependency>
+            <groupId>org.springframework.cloud</groupId>
+            <artifactId>spring-cloud-starter-security</artifactId>
+        </dependency>
+
+        <dependency>
+            <groupId>org.springframework.cloud</groupId>
+            <artifactId>spring-cloud-starter-oauth2</artifactId>
+        </dependency>
+
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-thymeleaf</artifactId>
+        </dependency>
+
+        <dependency>
+            <groupId>org.webjars</groupId>
+            <artifactId>jquery</artifactId>
+            <version>${webjar.jauery.version}</version>
+        </dependency>
+
+
+        <dependency>
+            <groupId>javax.xml.bind</groupId>
+            <artifactId>jaxb-api</artifactId>
+        </dependency>
+
+        <dependency>
+            <groupId>com.sun.xml.bind</groupId>
+            <artifactId>jaxb-impl</artifactId>
+        </dependency>
+
+        <dependency>
+            <groupId>com.sun.xml.bind</groupId>
+            <artifactId>jaxb-core</artifactId>
+        </dependency>
+
+        <dependency>
+            <groupId>javax.activation</groupId>
+            <artifactId>activation</artifactId>
+        </dependency>
+
+    </dependencies>
+
+    <dependencyManagement>
+
+        <dependencies>
+
+            <dependency>
+                <groupId>xyz.lemone.lime</groupId>
+                <artifactId>lime-dependencies</artifactId>
+                <version>${lime.dependencies.version}</version>
+                <scope>import</scope>
+                <type>pom</type>
+            </dependency>
+
+        </dependencies>
+
+    </dependencyManagement>
+
+
+    <!-- 多环境打包配置 -->
+    <profiles>
+
+        <!-- dev  开发环境  -->
+        <profile>
+            <id>dev</id>
+            <properties>
+                <profile.active>dev</profile.active>
+            </properties>
+            <activation>
+                <activeByDefault>true</activeByDefault>
+            </activation>
+        </profile>
+
+        <!-- 本地开发环境  -->
+        <profile>
+            <id>dev-local</id>
+            <properties>
+                <profile.active>dev-local</profile.active>
+            </properties>
+        </profile>
+
+        <!-- docker 环境 -->
+        <profile>
+            <id>docker</id>
+            <properties>
+                <profile.active>docker</profile.active>
+            </properties>
+        </profile>
+
+    </profiles>
+
+
+    <build>
+
+        <!-- 配置文件处理 -->
+        <resources>
+
+            <!--要排除的文件-->
+            <resource>
+                <directory>${basedir}/src/main/resources</directory>
+                <excludes>
+                    <exclude>bootstrap.yml</exclude>
+                    <exclude>application*.yml</exclude>
+                </excludes>
+            </resource>
+
+            <!--要引入的文件-->
+            <resource>
+                <filtering>true</filtering>
+                <directory>${basedir}/src/main/resources</directory>
+                <includes>
+                    <include>bootstrap.yml</include>
+                    <include>application-${profile.active}.yml</include>
+                </includes>
+            </resource>
+
+        </resources>
+
+        <plugins>
+
+            <!-- maven  编译插件 -->
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-compiler-plugin</artifactId>
+            </plugin>
+
+            <!-- Spring boot maven 打包插件 -->
+            <plugin>
+                <groupId>org.springframework.boot</groupId>
+                <artifactId>spring-boot-maven-plugin</artifactId>
+            </plugin>
+
+
+        </plugins>
+    </build>
+
+</project>

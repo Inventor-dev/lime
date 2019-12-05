@@ -1,4 +1,4 @@
-package lime.core.config;
+package xyz.lemone.lime.core.config;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
@@ -23,7 +23,7 @@ import org.springframework.security.oauth2.provider.approval.UserApprovalHandler
 import org.springframework.security.oauth2.provider.request.DefaultOAuth2RequestFactory;
 import org.springframework.security.oauth2.provider.token.TokenStore;
 import org.springframework.security.oauth2.provider.token.store.InMemoryTokenStore;
-import lime.core.support.oauth.SparklrUserApprovalHandler;
+import xyz.lemone.lime.core.support.oauth.SparklrUserApprovalHandler;
 
 /**
  * 授权服务配置类
@@ -32,18 +32,18 @@ import lime.core.support.oauth.SparklrUserApprovalHandler;
  */
 @Configuration
 public class OAuth2ServerConfig {
-    
+
     private static final String SPARKLR_RESOURCE_ID = "sparklr";
-    
+
     @Configuration
     @EnableResourceServer
     protected static class ResourceServerConfiguration extends ResourceServerConfigurerAdapter {
-        
+
         @Override
         public void configure(ResourceServerSecurityConfigurer resources) {
             resources.resourceId(SPARKLR_RESOURCE_ID).stateless(false);
         }
-        
+
         @Override
         public void configure(HttpSecurity http) throws Exception {
             // @formatter:off
@@ -52,7 +52,7 @@ public class OAuth2ServerConfig {
                     // session creation to be allowed (it's disabled by default in 2.0.6)
                     .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.IF_REQUIRED)
                     .and()
-                    .requestMatchers().antMatchers("/photos/**", "/oauth/users/**", "/oauth/clients/**","/me")
+                    .requestMatchers().antMatchers("/photos/**", "/oauth/users/**", "/oauth/clients/**", "/me")
                     .and()
                     .authorizeRequests()
                     .antMatchers("/me").authenticated()
@@ -68,36 +68,33 @@ public class OAuth2ServerConfig {
                     .access("#oauth2.clientHasRole('ROLE_CLIENT') and #oauth2.isClient() and #oauth2.hasScope('read')");
             // @formatter:on
         }
-        
-        
-        
+
+
     }
-    
-    
-    
-    
+
+
     @Configuration
     @EnableAuthorizationServer
     protected static class AuthorizationServerConfiguration extends AuthorizationServerConfigurerAdapter {
-        
+
         @Autowired
         private TokenStore tokenStore;
-        
+
         @Autowired
         private UserApprovalHandler userApprovalHandler;
-        
+
         @Autowired
         @Qualifier("authenticationManagerBean")
         private AuthenticationManager authenticationManager;
-        
+
         @Value("${tonr.redirect:http://localhost:8080/tonr2/sparklr/redirect}")
         private String tonrRedirectUri;
-        
+
         @Override
         public void configure(ClientDetailsServiceConfigurer clients) throws Exception {
             // @formatter:off
             clients.inMemory().withClient("tonr")
-                    .resourceIds(SPARKLR_RESOURCE_ID) 
+                    .resourceIds(SPARKLR_RESOURCE_ID)
                     .authorizedGrantTypes("authorization_code", "implicit")
                     .authorities("ROLE_CLIENT")
                     .scopes("read", "write")
@@ -143,42 +140,41 @@ public class OAuth2ServerConfig {
                     .autoApprove(true);
             // @formatter:on
         }
-        
-        
-        
+
+
         @Bean
         public TokenStore tokenStore() {
             return new InMemoryTokenStore();
         }
-        
+
         @Override
         public void configure(AuthorizationServerEndpointsConfigurer endpoints) throws Exception {
             endpoints.tokenStore(tokenStore).userApprovalHandler(userApprovalHandler)
                     .authenticationManager(authenticationManager);
         }
-        
+
         @Override
         public void configure(AuthorizationServerSecurityConfigurer oauthServer) throws Exception {
             oauthServer.realm("sparklr2/client");
         }
-        
+
     }
-    
+
     protected static class Stuff {
-        
+
         @Autowired
         private ClientDetailsService clientDetailsService;
-        
+
         @Autowired
         private TokenStore tokenStore;
-        
+
         @Bean
         public ApprovalStore approvalStore() throws Exception {
             TokenApprovalStore store = new TokenApprovalStore();
             store.setTokenStore(tokenStore);
             return store;
         }
-        
+
         @Bean
         @Lazy
         @Scope(proxyMode = ScopedProxyMode.TARGET_CLASS)
@@ -191,6 +187,6 @@ public class OAuth2ServerConfig {
             return handler;
         }
     }
-    
-    
+
+
 }

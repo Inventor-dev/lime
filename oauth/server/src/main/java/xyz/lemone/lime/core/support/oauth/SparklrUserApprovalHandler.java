@@ -1,4 +1,4 @@
-package lime.core.support.oauth;
+package xyz.lemone.lime.core.support.oauth;
 
 import org.springframework.security.core.Authentication;
 import org.springframework.security.oauth2.provider.AuthorizationRequest;
@@ -10,11 +10,11 @@ import org.springframework.security.oauth2.provider.approval.ApprovalStoreUserAp
 import java.util.Collection;
 
 public class SparklrUserApprovalHandler extends ApprovalStoreUserApprovalHandler {
-    
+
     private boolean useApprovalStore = true;
-    
+
     private ClientDetailsService clientDetailsService;
-    
+
     /**
      * Service to load client details (optional) for auto approval checks.
      *
@@ -25,14 +25,14 @@ public class SparklrUserApprovalHandler extends ApprovalStoreUserApprovalHandler
         this.clientDetailsService = clientDetailsService;
         super.setClientDetailsService(clientDetailsService);
     }
-    
+
     /**
      * @param useApprovalStore the useTokenServices to set
      */
     public void setUseApprovalStore(boolean useApprovalStore) {
         this.useApprovalStore = useApprovalStore;
     }
-    
+
     /**
      * Allows automatic approval for a white list of clients in the implicit grant case.
      *
@@ -44,7 +44,7 @@ public class SparklrUserApprovalHandler extends ApprovalStoreUserApprovalHandler
     @Override
     public AuthorizationRequest checkForPreApproval(AuthorizationRequest authorizationRequest,
                                                     Authentication userAuthentication) {
-        
+
         boolean approved = false;
         // If we are allowed to check existing approvals this will short circuit the decision
         if (useApprovalStore) {
@@ -69,9 +69,9 @@ public class SparklrUserApprovalHandler extends ApprovalStoreUserApprovalHandler
             }
         }
         authorizationRequest.setApproved(approved);
-        
+
         return authorizationRequest;
-        
+
     }
-    
+
 }

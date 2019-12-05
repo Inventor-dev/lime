@@ -1,4 +1,4 @@
-package lime.core.config;
+package xyz.lemone.lime.core.config;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
@@ -19,13 +19,13 @@ import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 @Configuration
 @EnableWebSecurity
 public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
-    
-    
+
+
     @Bean
     PasswordEncoder passwordEncoder() {
         return PasswordEncoderFactories.createDelegatingPasswordEncoder();
     }
-    
+
     @Bean
     @Override
     public UserDetailsService userDetailsService() {
@@ -35,7 +35,7 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
                 ,User.withUsername("paul").password(passwordEncoder.encode("emu")).roles("USER").build()
         );
     }
-    
+
     @Override
     public void configure(WebSecurity web) throws Exception {
 //        忽略资源路径
@@ -46,13 +46,13 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
                 "/login_form.html");
 //        @formatter:on
     }
-    
+
     @Bean
     @Override
     public AuthenticationManager authenticationManagerBean() throws Exception {
         return super.authenticationManagerBean();
     }
-    
+
     @Override
     protected void configure(HttpSecurity http) throws Exception {
         // @formatter:off
